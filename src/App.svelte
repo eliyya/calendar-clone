@@ -20,13 +20,13 @@
 
   const date = new Date();
 
-  // TODO: add google icons 
+  // TODO: add google icons
 
   const actualDaate = `${months[date.getMonth()]} ${date.getFullYear()}`;
 </script>
 
 <header>
-  <button><Burger /></button>
+  <button class="menu"><Burger /></button>
   <div class="logo">
     <img src={logo} alt="" />
     <h1>Calendario</h1>
@@ -66,12 +66,23 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    color: #000;
+    color: #000; 
   }
+  header button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 1.5rem;
+    font-size: 1.5rem;
+  }
+ 
+  
 
   .root {
     display: flex;
     row-gap: 1rem;
     flex-direction: row;
   }
+
 </style>
