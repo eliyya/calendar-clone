@@ -1,13 +1,11 @@
+import { writable } from "svelte/store"
+
 export const modeObject = {
   D: "Dia",
   W: "Semana",
   M: "Mes",
-  Y: "Ano",
+  Y: "Año",
   A: "Agenda",
-};
-
-export let mode: keyof typeof modeObject = "M";
-
-export function setMode(newMode: keyof typeof modeObject) {
-    mode = newMode;
 }
+
+export const globalMode = writable<keyof typeof modeObject>("M")

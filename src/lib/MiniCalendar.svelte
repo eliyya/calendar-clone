@@ -1,24 +1,13 @@
 <script lang="ts">
   import { getActualDate } from "../stores/date.js"
 
-  // TODO: generate calendar
-  /*
-    obtener pirmer dia del mes
-    obtener numero de semana del primer dia del mes
-    obtener cantidad faltante de dias para completar la primera semana
-    obtener ultimos dias de mes anterior
-    aniadir dias faltantes de la primera semana al array
-
-    aniadir todos los dias del mes al array
-
-    obtener ultimo dia del mes
-    obtener numero de semana del ultimo dia del mes
-    obtener cantidad faltante de dias para completar la ultima semana
-    obtener primeros dias de mes siguiente
-    aniadir dias faltantes de la ultima semana al array
-
-    devolver el array
-  */
+  import { getCalendarDays } from "../stores/date.js"
+  const calendarDaysPerWeek: ReturnType<typeof getCalendarDays>[] = []
+  const calendarDays = getCalendarDays()
+  for (let i = 0; i < calendarDays.length; i++) {
+    if (i % 7 === 0) calendarDaysPerWeek.push([])
+    calendarDaysPerWeek[calendarDaysPerWeek.length - 1].push(calendarDays[i])
+  }
 </script>
 
 <div class="mini">
@@ -27,17 +16,24 @@
     <button class="material-symbols-outlined">arrow_back_ios</button>
     <button class="material-symbols-outlined">arrow_forward_ios</button>
   </header>
-  <div>
-    <div>
-      <span>D</span>
-      <span>L</span>
-      <span>M</span>
-      <span>X</span>
-      <span>J</span>
-      <span>V</span>
-      <span>S</span>
-    </div>
-  </div>
+  <table>
+    <thead>
+      <th>D</th>
+      <th>L</th>
+      <th>M</th>
+      <th>X</th>
+      <th>J</th>
+      <th>V</th>
+      <th>S</th>
+    </thead>
+    {#each calendarDaysPerWeek as week}
+      <tr>
+        {#each week as day}
+          <td>{day.date}</td>
+        {/each}
+      </tr>
+    {/each}
+  </table>
 </div>
 
 <style>
@@ -53,7 +49,7 @@
     flex-grow: 1;
   }
 
-  span {
+  span, td {
     font-size: 10px;
   }
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import logo from "../assets/calendar_25_2x.png"
 
-  import { mode, modeObject, setMode } from "../stores/mode.js"
+  import { globalMode, modeObject } from "../stores/mode.js"
   import { getActualDate } from "../stores/date.js"
   import PrimaryButton from "./PrimaryButton.svelte"
   import SecondaryButton from "./SecondaryButton.svelte";
@@ -9,10 +9,15 @@
   const profile = "https://lh3.googleusercontent.com/ogw/AOLn63FEWRlHe0Yy8QxiiTlu5zbS1jPMJVqVBuqQh-e7Ig=s32-c-mo"
 
   let dropdown = false
+  let mode: keyof typeof modeObject
+
+  globalMode.subscribe((value) => {
+    mode = value
+  })
 
   const toggleDropdow = () => (dropdown = !dropdown)
 
-  const changueMode = (newMode: keyof typeof modeObject) => () => (setMode(newMode), void (dropdown = false)) // TODO: areglar botton menu 
+  const changueMode = (newMode: keyof typeof modeObject) => () => (globalMode.set(newMode), void (dropdown = false))
 </script>
 
 <header>
@@ -44,7 +49,7 @@
     <button on:click={changueMode("D")}>Dia <span>D</span></button>
     <button on:click={changueMode("W")}>Semana <span>W</span></button>
     <button on:click={changueMode("M")}>Mes <span>M</span></button>
-    <button on:click={changueMode("Y")}>Ano <span>Y</span></button>
+    <button on:click={changueMode("Y")}>Año <span>Y</span></button>
     <button on:click={changueMode("A")}>Agenda <span>A</span></button>
   </div>
 {/if}

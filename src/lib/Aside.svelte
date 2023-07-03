@@ -1,19 +1,25 @@
 <script lang="ts">
-    import MiniCalendar from "./MiniCalendar.svelte";
+  import MiniCalendar from "./MiniCalendar.svelte"
 </script>
 
 <aside>
-  <button ><i class="material-symbols-outlined">add</i> Crear <i class="material-symbols-outlined">
-    arrow_drop_down
-  </i></button>
+  <button
+    ><i class="material-symbols-outlined">add</i> Crear
+    <i class="material-symbols-outlined"> arrow_drop_down </i></button
+  >
   <MiniCalendar />
   <input type="text" placeholder="buscar" />
   <button type="button" placeholder="enter" />
+  <h2>mis calendarios</h2>
+  <div>
+    <p>otros</p>
+    <i class="material-symbols-outlined">toolbar add </i>
+  </div>
 </aside>
 
 <style>
   @import "../var.css";
-  
+
   aside {
     display: flex;
     flex-direction: column;
@@ -26,7 +32,7 @@
     background-color: #ffffff;
     border-radius: 50px;
     border: solid 1px var(--button-hover-background-color);
-    box-shadow: 0px 1px 2px 0px rgba(60,64,67,0.3),0px 1px 3px 1px rgba(60,64,67,0.15); 
+    box-shadow: 0px 1px 2px 0px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
     cursor: pointer;
     padding: 10px;
     margin: 0 10px 10px 10px;
@@ -39,13 +45,10 @@
 
   aside > button:hover {
     background-color: var(--button-hover-background-color);
-    box-shadow: 0px 5px 10px 0px rgba(60,64,67,0.3),0px 8px 12px 6px rgba(60,64,67,0.15);
-   
- }   
-   
+    box-shadow: 0px 5px 10px 0px rgba(60, 64, 67, 0.3), 0px 8px 12px 6px rgba(60, 64, 67, 0.15);
+  }
 
-
-  aside > button > i { 
+  aside > button > i {
     background-color: transparent;
     border-radius: 10%;
     outline: none;
@@ -53,11 +56,47 @@
     font-size: 1.5rem;
     padding: 3px;
     margin: 0 15px 0 0;
-
-    
   }
 
   input {
     background-color: var(--button-hover-background-color);
   }
+  aside > h2 {
+    margin: 0;
+    padding:0px 40px 0px 40px ;
+    font-size: 1rem;
+    width: 100%;
+  }
+  aside > h2:hover {
+    background-color: var(--button-hover-background-color);
+  }
+  aside > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+    margin: 0 10px 10px 10px;
+    padding: 0px 50px 0px 50px;
+    font-size: 10px;
+  }
+  aside > div:hover {
+    background-color: var(--button-hover-background-color);
+  }
+  aside > div > i {
+    background-color: transparent;
+    border-radius: 10%;
+    outline: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    
+  }
+   
+  aside > div > p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+  }
+
+
+  
 </style>

@@ -13,7 +13,8 @@
   .root {
     display: flex;
     flex-direction: row;
-    height: 100%;
+    height: 100%; 
+    /* https://svelte.dev/docs/svelte-store */
   }
 
   main {
