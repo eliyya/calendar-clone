@@ -6,6 +6,8 @@
   import PrimaryButton from "./PrimaryButton.svelte"
   import SecondaryButton from "./SecondaryButton.svelte";
 
+  import { globalAside } from "../stores/aside.js"
+
   const profile = "https://lh3.googleusercontent.com/ogw/AOLn63FEWRlHe0Yy8QxiiTlu5zbS1jPMJVqVBuqQh-e7Ig=s32-c-mo"
 
   let dropdown = false
@@ -22,7 +24,7 @@
 
 <header>
   <div class="left">
-    <SecondaryButton icon='menu' />
+    <SecondaryButton icon='menu' onClick={() => globalAside.update(a => !a)} />
     <div class="logo">
       <img src={logo} alt="logo" />
       <h1>Calendario</h1>
@@ -68,7 +70,6 @@
     justify-content: space-between;
     font-size: 10px;
     padding: 10px;
-    overflow: hidden;
   }
 
   header > div {

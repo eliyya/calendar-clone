@@ -3,18 +3,27 @@
 </script>
 
 <aside>
-  <button
-    ><i class="material-symbols-outlined">add</i> Crear
-    <i class="material-symbols-outlined"> arrow_drop_down </i></button
-  >
+
+  <button>
+    <i class="material-symbols-outlined">add</i> Crear
+    <i class="material-symbols-outlined"> arrow_drop_down </i>
+  </button>
+
   <MiniCalendar />
   <input type="text" placeholder="buscar" />
-  <button type="button" placeholder="enter" />
   <h2>mis calendarios</h2>
-  <div>
+  <div class="cl">
+    <p>calendario 1</p>
+    <i class="material-symbols-outlined">toolbar</i>
+  </div>
+  <div class="cl">
     <p>otros</p>
     <i class="material-symbols-outlined">toolbar add </i>
   </div>
+  <div class="terms">
+    <span>Términos – Privacidad</span>
+  </div>
+  
 </aside>
 
 <style>
@@ -63,14 +72,13 @@
   }
   aside > h2 {
     margin: 0;
-    padding:0px 40px 0px 40px ;
     font-size: 1rem;
     width: 100%;
   }
   aside > h2:hover {
     background-color: var(--button-hover-background-color);
   }
-  aside > div {
+  .cl {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -79,24 +87,29 @@
     padding: 0px 50px 0px 50px;
     font-size: 10px;
   }
-  aside > div:hover {
+  
+  .cl:hover {
     background-color: var(--button-hover-background-color);
   }
-  aside > div > i {
+  .cl > i {
     background-color: transparent;
     border-radius: 10%;
     outline: none;
     cursor: pointer;
     font-size: 1.5rem;
-    
   }
-   
-  aside > div > p {
+
+  .cl > p {
     margin: 0;
     padding: 0;
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 
-
-  
+  .terms {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-grow: 1;
+    align-items: flex-end;
+  }
 </style>

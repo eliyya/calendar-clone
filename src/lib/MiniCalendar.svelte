@@ -1,16 +1,14 @@
 <script lang="ts">
   import { getActualDate } from "../stores/date.js"
+  import { globalSelectedDate, getCalendarDaysPerWeek } from "../stores/date.js"
 
-  import { getCalendarDays } from "../stores/date.js"
-  const calendarDaysPerWeek: ReturnType<typeof getCalendarDays>[] = []
-  const calendarDays = getCalendarDays()
-  for (let i = 0; i < calendarDays.length; i++) {
-    if (i % 7 === 0) calendarDaysPerWeek.push([])
-    calendarDaysPerWeek[calendarDaysPerWeek.length - 1].push(calendarDays[i])
-  }
+  const calendarDaysPerWeek = getCalendarDaysPerWeek()
+  let selectedDate: Date
+  globalSelectedDate.subscribe(value => selectedDate = value)
+
 </script>
 
-<div class="mini">
+<div>
   <header>
     <span>{getActualDate()}</span>
     <button class="material-symbols-outlined">arrow_back_ios</button>
@@ -29,7 +27,7 @@
     {#each calendarDaysPerWeek as week}
       <tr>
         {#each week as day}
-          <td>{day.date}</td>
+          <td style={day.getMonth() === selectedDate.getMonth() ? 'color:#000' : ''}>{day.getDate()}</td>
         {/each}
       </tr>
     {/each}
@@ -37,6 +35,10 @@
 </div>
 
 <style>
+  div {
+    padding: 10px;
+  }
+
   header {
     display: flex;
     justify-content: start;
@@ -49,7 +51,7 @@
     flex-grow: 1;
   }
 
-  span, td {
+  th, td {
     font-size: 10px;
   }
 
@@ -62,6 +64,19 @@
   }
 
   button:hover {
+    background: var(--button-hover-background-color);
+  }
+
+  td {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: auto;
+    font-weight: 500;
+  }
+
+  td:hover {
     background: var(--button-hover-background-color);
   }
 </style>

@@ -1,28 +1,27 @@
 <script lang="ts">
   import Menu from "./lib/Menu.svelte";
   import Aside from "./lib/Aside.svelte";
+  import Calendar from "./lib/Calendar.svelte";
+
+  import { globalAside } from './stores/aside.js'
+  let asideVisible = true;
+
+  globalAside.subscribe(value => asideVisible = value);
+
 </script>
 
 <Menu />
-<div class="root">
-  <Aside />
-  <main>calendario</main>
+<div>
+  {#if asideVisible}
+    <Aside />
+  {/if}
+  <Calendar />
 </div>
 
 <style>
-  .root {
+  div {
     display: flex;
     flex-direction: row;
-    height: 100%; 
-    /* https://svelte.dev/docs/svelte-store */
-  }
-
-  main {
-    background-color: #f5f5f5;
-    flex-grow: 1;
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
   }
 </style>

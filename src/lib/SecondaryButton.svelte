@@ -4,6 +4,7 @@
       currentTarget: EventTarget & HTMLButtonElement
     }
   ) => any = () => 0
+  
   export let icon: string = ""
 </script>
 
