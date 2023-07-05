@@ -8,7 +8,7 @@
 <main>
   {#each calendarDaysPerWeek as week, i}
     {#each week as day, j}
-      <div class="day">
+      <div>
         {i === 0 ? days[j] : ""}
         {day.getDate()}
       </div>
@@ -18,10 +18,16 @@
 
 <style>
   main {
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     flex-grow: 1;
     color: #000;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
   }
+  div{
+    border-bottom: solid 1px #ccc;
+    border-right: solid 1px #ccc;
+    border-left: solid 1px #ccc;
+  }
+  
 </style>

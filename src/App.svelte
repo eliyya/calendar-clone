@@ -2,6 +2,7 @@
   import Menu from "./lib/Menu.svelte";
   import Aside from "./lib/Aside.svelte";
   import Calendar from "./lib/Calendar.svelte";
+  import CreateButton from "./lib/CreateButton.svelte";
 
   import { globalAside } from './stores/aside.js'
   let asideVisible = true;
@@ -17,6 +18,7 @@
   {/if}
   <Calendar />
 </div>
+<CreateButton />
 
 <style>
   div {

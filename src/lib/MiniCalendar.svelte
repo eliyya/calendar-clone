@@ -1,42 +1,84 @@
 <script lang="ts">
-  import { getActualDate } from "../stores/date.js"
-  import { globalSelectedDate, getCalendarDaysPerWeek } from "../stores/date.js"
+  import { globalSelectedDate, getCalendarDays, globalActualDate, getActualDate, months } from "../stores/date.js"
 
-  const calendarDaysPerWeek = getCalendarDaysPerWeek()
+  
+  let calendarDays = getCalendarDays()
+
+  let actualDate: Date = new Date()
+
+  globalActualDate.subscribe((value) => {
+    actualDate = value
+  })
+
   let selectedDate: Date
-  globalSelectedDate.subscribe(value => selectedDate = value)
+  globalSelectedDate.subscribe((value) => {
+    selectedDate = value
+    if (actualDate.getMonth() !== selectedDate.getMonth()) calendarDays = getCalendarDays(value)
+  })
 
+  const changeSelectedDate = (newDate: Date) => () => globalSelectedDate.set(newDate)
 </script>
 
-<div>
+<div class="mini">
   <header>
-    <span>{getActualDate()}</span>
+    <span>{months[selectedDate.getMonth()]} {selectedDate.getFullYear()}</span>
     <button class="material-symbols-outlined">arrow_back_ios</button>
     <button class="material-symbols-outlined">arrow_forward_ios</button>
   </header>
-  <table>
-    <thead>
-      <th>D</th>
-      <th>L</th>
-      <th>M</th>
-      <th>X</th>
-      <th>J</th>
-      <th>V</th>
-      <th>S</th>
-    </thead>
-    {#each calendarDaysPerWeek as week}
-      <tr>
-        {#each week as day}
-          <td style={day.getMonth() === selectedDate.getMonth() ? 'color:#000' : ''}>{day.getDate()}</td>
-        {/each}
-      </tr>
+  <div>
+    <span>D</span>
+    <span>L</span>
+    <span>M</span>
+    <span>X</span>
+    <span>J</span>
+    <span>V</span>
+    <span>S</span>
+    {#each calendarDays as day}
+      <button
+        on:click={changeSelectedDate(day)}
+        style={(day.getMonth() === selectedDate.getMonth() ? "color:#000;" : "") +
+          (day.getMonth() === selectedDate.getMonth() && 
+          day.getDate() === selectedDate.getDate()
+            ? "background:rgb(210,227,252);": "") + 
+            (day.getMonth() === actualDate.getMonth() &&
+            day.getDate() === actualDate.getDate()
+            ? "background:rgb(26,115,232);" : "")}
+      >
+        {day.getDate()}
+      </button>
     {/each}
-  </table>
+  </div>
 </div>
 
 <style>
-  div {
+  div > div {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  div > div > button:hover {
+    background: var(--button-hover-background-color);
+  }
+
+  span,
+  div > div > button {
+    font-size: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 2px;
+    border: none;
+    background-color: #ffffff;
+  }
+
+  .mini {
     padding: 10px;
+    margin-top: 70px;
   }
 
   header {
@@ -51,11 +93,7 @@
     flex-grow: 1;
   }
 
-  th, td {
-    font-size: 10px;
-  }
-
-  button {
+  header > button {
     padding: 0;
     border-radius: 50px;
     font-size: 10px;
@@ -64,19 +102,6 @@
   }
 
   button:hover {
-    background: var(--button-hover-background-color);
-  }
-
-  td {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    cursor: pointer;
-    margin: auto;
-    font-weight: 500;
-  }
-
-  td:hover {
     background: var(--button-hover-background-color);
   }
 </style>

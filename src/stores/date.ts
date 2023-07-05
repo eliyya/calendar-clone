@@ -17,14 +17,17 @@ export const months = [
 
 export const days = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
 
-export const globalSelectedDate = writable(new Date());
 
-const date = new Date();
+let date: Date = new Date();
+export const globalActualDate = writable(new Date());
+globalActualDate.subscribe(value => date = value);
+
+export const globalSelectedDate = writable(new Date());
 
 export const getActualDate = () =>
   `${months[date.getMonth()]} ${date.getFullYear()}`;
 
-export function getCalendarDays() {
+export function getCalendarDays(date: Date = new Date()) {
   const days: Date[] = [];
   const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
   const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -33,6 +36,7 @@ export function getCalendarDays() {
   // last days of previous month
   for (let i = 1; i <= firstDay.getDay(); i++) 
     days.push(new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate() - i));
+  days.reverse();
 
   // days of current month
   for (let i = 0; i < lastDay.getDate(); i++) 
