@@ -1,7 +1,7 @@
 <script lang="ts">
   import Menu from "./lib/Menu.svelte";
   import Aside from "./lib/Aside.svelte";
-  import Calendar from "./lib/Calendar.svelte";
+  import Calendar from "./lib/calendars/Calendar.svelte";
   import CreateButton from "./lib/CreateButton.svelte";
 
   import { globalAside } from './stores/aside.js'

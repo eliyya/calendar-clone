@@ -4,7 +4,10 @@
 
 <aside>
   <MiniCalendar />
-  <input type="text" placeholder="buscar" />
+  <div>
+    <i aria-label="search" class="grupo material-symbols-outlined">group</i>
+    <input name="search" id="search" type="text" placeholder="Buscar personas"/>
+  </div>
   <h2>mis calendarios</h2>
   <div class="cl">
     <p>calendario 1</p>
@@ -35,6 +38,7 @@
   input {
     background-color: var(--button-hover-background-color);
   }
+
   aside > h2 {
     margin: 0;
     font-size: 1rem;
@@ -43,6 +47,7 @@
   aside > h2:hover {
     background-color: var(--button-hover-background-color);
   }
+  
   .cl {
     display: flex;
     align-items: center;
@@ -56,6 +61,7 @@
   .cl:hover {
     background-color: var(--button-hover-background-color);
   }
+
   .cl > i {
     background-color: transparent;
     border-radius: 10%;
@@ -77,6 +83,7 @@
     flex-grow: 1;
     align-items: flex-end;
   }
+
   span {
     display: flex;
     align-items: center;
@@ -85,11 +92,33 @@
     padding: 0px 50px 0px 50px;
     font-size: 15px;
   }	
+
   span> i {
-    background-color:  #ffffff;
     border-radius: 10%;
   }
+
   span:hover {
     background-color: var(--button-hover-background-color);
+  }
+
+  div>input{
+    border:  #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  div{
+    display: flex;
+    align-items: center;
+  }
+
+  div>.grupo{
+    position: absolute;
+    font-size: 1.5rem;
+    margin: 0;
+    width: 50px;
   }
 </style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { globalSelectedDate, getCalendarDays, globalActualDate, getActualDate, months } from "../stores/date.js"
+  import { globalSelectedDate, getCalendarDays, globalActualDate, months } from "../stores/date.js"
 
   
   let calendarDays = getCalendarDays()
@@ -12,18 +12,34 @@
 
   let selectedDate: Date
   globalSelectedDate.subscribe((value) => {
+    if (selectedDate?.getMonth() !== value.getMonth()) calendarDays = getCalendarDays(value)
     selectedDate = value
-    if (actualDate.getMonth() !== selectedDate.getMonth()) calendarDays = getCalendarDays(value)
   })
 
   const changeSelectedDate = (newDate: Date) => () => globalSelectedDate.set(newDate)
+
+  const nextMonth = () => {
+    globalSelectedDate.update((value) => {
+      const newDate = new Date(value)
+      newDate.setMonth(newDate.getMonth() + 1)
+      return newDate
+    })
+  }
+
+  const prevMonth = () => {
+    globalSelectedDate.update((value) => {
+      const newDate = new Date(value)
+      newDate.setMonth(newDate.getMonth() - 1)
+      return newDate
+    })
+  }
 </script>
 
 <div class="mini">
   <header>
-    <span>{months[selectedDate.getMonth()]} {selectedDate.getFullYear()}</span>
-    <button class="material-symbols-outlined">arrow_back_ios</button>
-    <button class="material-symbols-outlined">arrow_forward_ios</button>
+    <span class="date">{months[selectedDate.getMonth()]} {selectedDate.getFullYear()}</span>
+    <button on:click={nextMonth} class="material-symbols-outlined">arrow_back_ios</button>
+    <button on:click={prevMonth} class="material-symbols-outlined">arrow_forward_ios</button>
   </header>
   <div>
     <span>D</span>
@@ -60,8 +76,13 @@
     background: var(--button-hover-background-color);
   }
 
-  span,
-  div > div > button {
+  .date {
+    text-align: start;
+    padding: 0 10px;
+  }
+
+  div > span,
+  button {
     font-size: 10px;
     width: 24px;
     height: 24px;

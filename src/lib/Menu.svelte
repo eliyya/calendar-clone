@@ -2,7 +2,7 @@
   import logo from "../assets/calendar_25_2x.png"
 
   import { globalMode, modeObject } from "../stores/mode.js"
-  import { getActualDate } from "../stores/date.js"
+  import { months, globalSelectedDate } from "../stores/date.js"
   import PrimaryButton from "./PrimaryButton.svelte"
   import SecondaryButton from "./SecondaryButton.svelte";
 
@@ -12,14 +12,33 @@
 
   let dropdown = false
   let mode: keyof typeof modeObject
+  let selectedDay = new Date()
 
-  globalMode.subscribe((value) => {
-    mode = value
-  })
+  globalMode.subscribe((value) => mode = value)
+
+  globalSelectedDate.subscribe((value) => selectedDay = value)
 
   const toggleDropdow = () => (dropdown = !dropdown)
 
   const changueMode = (newMode: keyof typeof modeObject) => () => (globalMode.set(newMode), void (dropdown = false))
+
+  const nextMonth = () => {
+    globalSelectedDate.update((value) => {
+      const newDate = new Date(value)
+      newDate.setMonth(newDate.getMonth() + 1)
+      return newDate
+    })
+  }
+
+  const prevMonth = () => {
+    globalSelectedDate.update((value) => {
+      const newDate = new Date(value)
+      newDate.setMonth(newDate.getMonth() - 1)
+      return newDate
+    })
+  }
+
+  const now = () => globalSelectedDate.set(new Date())
 </script>
 
 <header>
@@ -29,10 +48,12 @@
       <img src={logo} alt="logo" />
       <h1>Calendario</h1>
     </div>
-    <PrimaryButton>Hoy</PrimaryButton>
-    <SecondaryButton icon='arrow_back_ios' />
-    <SecondaryButton icon='arrow_forward_ios' />
-    <h2>{getActualDate()}</h2>
+
+    <PrimaryButton onClick={now}>Hoy</PrimaryButton>
+    <SecondaryButton onClick={nextMonth} icon='arrow_back_ios' />
+    <SecondaryButton onClick={prevMonth} icon='arrow_forward_ios' />
+    <h2>{`${months[selectedDay.getMonth()]} ${selectedDay.getFullYear()}`}</h2>
+    
   </div>
   <div class="right">
     <SecondaryButton icon='search' />
@@ -61,7 +82,6 @@
 
   header {
     height: 50px;
-    background-color: #ffffff;
     text-align: center;
     border-bottom: 1px solid #2c2b2b;
     display: flex;
