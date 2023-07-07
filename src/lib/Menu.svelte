@@ -4,7 +4,7 @@
   import { globalMode, modeObject } from "../stores/mode.js"
   import { months, globalSelectedDate } from "../stores/date.js"
   import PrimaryButton from "./PrimaryButton.svelte"
-  import SecondaryButton from "./SecondaryButton.svelte";
+  import SecondaryButton from "./SecondaryButton.svelte"
 
   import { globalAside } from "../stores/aside.js"
 
@@ -22,18 +22,24 @@
 
   const changueMode = (newMode: keyof typeof modeObject) => () => (globalMode.set(newMode), void (dropdown = false))
 
-  const nextMonth = () => {
+  const nextDate = () => {
     globalSelectedDate.update((value) => {
       const newDate = new Date(value)
-      newDate.setMonth(newDate.getMonth() + 1)
+      if (mode === "D") newDate.setDate(newDate.getDate() + 1)
+      if (mode === "W") newDate.setDate(newDate.getDate() + 7)
+      if (mode === "M") newDate.setMonth(newDate.getMonth() + 1)
+      if (mode === "Y") newDate.setFullYear(newDate.getFullYear() + 1)
       return newDate
     })
   }
 
-  const prevMonth = () => {
+  const prevDate = () => {
     globalSelectedDate.update((value) => {
       const newDate = new Date(value)
-      newDate.setMonth(newDate.getMonth() - 1)
+      if (mode === "D") newDate.setDate(newDate.getDate() - 1)
+      if (mode === "W") newDate.setDate(newDate.getDate() - 7)
+      if (mode === "M") newDate.setMonth(newDate.getMonth() - 1)
+      if (mode === "Y") newDate.setFullYear(newDate.getFullYear() - 1)
       return newDate
     })
   }
@@ -50,8 +56,8 @@
     </div>
 
     <PrimaryButton onClick={now}>Hoy</PrimaryButton>
-    <SecondaryButton onClick={nextMonth} icon='arrow_back_ios' />
-    <SecondaryButton onClick={prevMonth} icon='arrow_forward_ios' />
+    <SecondaryButton onClick={nextDate} icon='arrow_back_ios' />
+    <SecondaryButton onClick={prevDate} icon='arrow_forward_ios' />
     <h2>{`${months[selectedDay.getMonth()]} ${selectedDay.getFullYear()}`}</h2>
     
   </div>
@@ -90,6 +96,7 @@
     justify-content: space-between;
     font-size: 10px;
     padding: 10px;
+    overflow: hidden;
   }
 
   header > div {

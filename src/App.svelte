@@ -11,6 +11,10 @@
 
 </script>
 
+<svelte:head>
+  <meta name="google" content="notranslate" />
+</svelte:head>
+
 <Menu />
 <div>
   {#if asideVisible}
@@ -24,6 +28,6 @@
   div {
     display: flex;
     flex-direction: row;
-    height: 100%;
+    height: calc(100vh - 71px);
   }
 </style>

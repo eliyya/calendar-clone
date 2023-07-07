@@ -38,7 +38,6 @@
 
   div{
     border-bottom: solid 1px #ccc;
-    border-right: solid 1px #ccc;
     border-left: solid 1px #ccc;
   }
 </style>
