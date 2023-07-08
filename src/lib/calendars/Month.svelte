@@ -20,7 +20,7 @@
   {#each calendarDaysPerWeek as week, i}
     {#each week as day, j}
       <div>
-        {i === 0 ? days[j] : ""}
+        {i === 0 ? days[j].toUpperCase() : ""}
         {day.getDate()}
       </div>
     {/each}
@@ -28,6 +28,11 @@
 </main>
 
 <style>
+  /* .d {
+    font-size: 11px;
+    font-weight: 500;
+  } */
+
   main {
     background-color: #ffffff;
     flex-grow: 1;

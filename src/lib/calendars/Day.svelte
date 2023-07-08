@@ -2,10 +2,10 @@
   import { getWeek, days, globalSelectedDate } from "../../stores/date.js"
   import SecondaryButton from "../SecondaryButton.svelte"
 
-  let week = getWeek()
+  let day = new Date()
 
   globalSelectedDate.subscribe((date) => {
-    week = getWeek(date)
+    day = date
   })
 </script>
 
@@ -13,20 +13,16 @@
   <header>
     <article />
     <div />
-    {#each week as day, i}
-      <article>
-        <span class='d'>{days[i].toUpperCase()}</span>
-        <SecondaryButton>{day.getDate()}</SecondaryButton>
-      </article>
-    {/each}
+    <article>
+      <span class="d">{days[day.getDay()].toUpperCase()}</span>
+      <span class="btn">{day.getDate()}</span>
+    </article>
     <div />
     <article class='utc'>
       <span>utc-6</span>
     </article>
     <div class="mdfbb" />
-    {#each week as day, i}
       <article class="fixeds" />
-    {/each}
     <div />
   </header>
   <div>
@@ -42,18 +38,15 @@
         <article class="mdfbb" />
       {/each}
     </div>
-    {#each Array(7) as _}
-      <section class="day">
-        {#each Array(24) as _}
-          <article />
-        {/each}
-      </section>
-    {/each}
+    <section class="day">
+      {#each Array(24) as _}
+        <article />
+      {/each}
+    </section>
   </div>
 </main>
 
 <style>
-
   .d {
     font-size: 11px;
     font-weight: 500;
@@ -66,11 +59,23 @@
     flex-direction: column;
   }
 
+  .btn {
+    background-color: var(--button-hover-background-color);
+    font-size: 26px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   article {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     min-height: 45px;
     /* border: 1px solid #ccc; */
   }
@@ -82,12 +87,12 @@
 
   header {
     display: grid;
-    grid-template-columns: 40px 10px repeat(7, 1fr) 10px;
+    grid-template-columns: 40px 10px repeat(1, 1fr) 10px;
   }
 
   main > div {
     display: grid;
-    grid-template-columns: 40px 10px repeat(7, 1fr);
+    grid-template-columns: 40px 10px repeat(1, 1fr);
   }
 
   main > div {
