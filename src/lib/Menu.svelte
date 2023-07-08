@@ -84,10 +84,8 @@
 {/if}
 
 <style>
-  @import "../var.css";
-
   header {
-    height: 50px;
+    height: 64px;
     text-align: center;
     border-bottom: 1px solid #2c2b2b;
     display: flex;
