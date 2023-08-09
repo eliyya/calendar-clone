@@ -56,6 +56,10 @@
     console.log(e.target)
   }
   let dialogOpen = false
+  
+
+
+
 </script>
 
 <header>
@@ -200,7 +204,10 @@
     left: 0;
     width: 500px;
     height: 500px;
-    border: 1px solid rgb(218, 220, 224);
+    border: 1px solid rgb(65, 66, 66,50%);
+    box-shadow: #2c2b2b 0px 0px 10px 0px;
+    border-radius: 10px;
+
     z-index: 10;
     display: flex;
     flex-direction: column;
@@ -219,6 +226,7 @@
     justify-content: space-between;
     height: 100%;
     width: 100%;
+    background: #fff;    
   }
   form > div {
     flex: 1 1 0%;
@@ -244,19 +252,34 @@
   }
 
   form > img {
+    
     flex: 1 1 0%;
-    border-radius: 50%;
+    border: solid 2px rgb(218, 220, 224);
+    border-radius: 50%; 
   }
 
   /* talves no me guste */
-  form button{
+  form button {
     margin: 10px;
     padding: 10px;
     width: 100px;
-    border: none;
+    border: 1px solid rgb(218, 220, 224);
     border-radius: 5px;
     background-color: #fff;
   }
+  form button:hover {
+    background-color: var(--button-hover-background-color);
+  }
 
+  section > label {
+    display: flex;
+    position: relative;
+    top: 33px;
+    width: 200px;
+    font-size: 15px;
+  }
+
+
+  
 
 </style>
