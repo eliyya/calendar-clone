@@ -45,6 +45,14 @@
   }
 
   const now = () => globalSelectedDate.set(new Date())
+
+  const handleLogin = (e: Event & {
+    readonly submitter: HTMLElement;
+} & {
+    currentTarget: EventTarget & HTMLFormElement;
+}) => {
+  console.log(e.target)  }
+  let dialogOpen = false
 </script>
 
 <header>
@@ -70,7 +78,29 @@
       <i class="material-symbols-outlined mode">arrow_drop_down</i>
     </PrimaryButton>
     <SecondaryButton icon='apps' />
-    <img src={profile} alt="profile" />
+    <button on:click={e => dialogOpen = !dialogOpen}>
+      <img src={profile} alt="profile" />
+    </button>
+    <dialog open={dialogOpen} on:close={e => dialogOpen = false}>
+      <form on:submit={handleLogin}>
+        <!-- mi procesador esta al 100% y no baja -->
+        <img src={profile} alt="login">
+        <div>
+          <section>
+            <label for="user">email</label>
+            <input type="email" id="user" name="user">
+          </section>
+          <section>
+            <label for="password">password</label>
+            <input type="password" name="password" id="password">
+          </section>
+        </div>
+        <div id='button-login'>
+          <button on:click={e=>dialogOpen = false}>Cancelar</button>
+          <button type="submit">Iniciar Sesion</button>
+        </div>s
+      </form>
+    </dialog>
   </div>
 </header>
 {#if dropdown}
@@ -161,4 +191,65 @@
   .dropdown > button:hover {
     background-color: var(--button-hover-background-color);
   }
+
+  dialog {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 500px;
+    height: 500px;
+    border: 1px solid rgb(218, 220, 224);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    
+  }
+  form > div{
+    flex: 1 1 0%;
+    display: flex; 
+    flex-direction: column;  
+    align-items: center;
+    justify-content: center;  
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+  }
+  section > input{
+    width: 200px;
+    height: 30px;
+    border: 1px solid rgb(218, 220, 224);
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+
+
+  form > img {
+    flex: 1 1 0%;
+    border-radius: 50%;
+  }
+
+    
 </style>
