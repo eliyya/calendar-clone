@@ -14,9 +14,9 @@
   let mode: keyof typeof modeObject
   let selectedDay = new Date()
 
-  globalMode.subscribe((value) => mode = value)
+  globalMode.subscribe((value) => (mode = value))
 
-  globalSelectedDate.subscribe((value) => selectedDay = value)
+  globalSelectedDate.subscribe((value) => (selectedDay = value))
 
   const toggleDropdow = () => (dropdown = !dropdown)
 
@@ -46,59 +46,61 @@
 
   const now = () => globalSelectedDate.set(new Date())
 
-  const handleLogin = (e: Event & {
-    readonly submitter: HTMLElement;
-} & {
-    currentTarget: EventTarget & HTMLFormElement;
-}) => {
-  console.log(e.target)  }
+  const handleLogin = (
+    e: Event & {
+      readonly submitter: HTMLElement
+    } & {
+      currentTarget: EventTarget & HTMLFormElement
+    }
+  ) => {
+    console.log(e.target)
+  }
   let dialogOpen = false
 </script>
 
 <header>
   <div class="left">
-    <SecondaryButton icon='menu' onClick={() => globalAside.update(a => !a)} />
+    <SecondaryButton icon="menu" onClick={() => globalAside.update((a) => !a)} />
     <div class="logo">
       <img src={logo} alt="logo" />
       <h1>Calendario</h1>
     </div>
 
     <PrimaryButton onClick={now}>Hoy</PrimaryButton>
-    <SecondaryButton onClick={nextDate} icon='arrow_back_ios' />
-    <SecondaryButton onClick={prevDate} icon='arrow_forward_ios' />
+    <SecondaryButton onClick={nextDate} icon="arrow_back_ios" />
+    <SecondaryButton onClick={prevDate} icon="arrow_forward_ios" />
     <h2>{`${months[selectedDay.getMonth()]} ${selectedDay.getFullYear()}`}</h2>
-    
   </div>
   <div class="right">
-    <SecondaryButton icon='search' />
-    <SecondaryButton icon='help' />
-    <SecondaryButton icon='settings' />
+    <SecondaryButton icon="search" />
+    <SecondaryButton icon="help" />
+    <SecondaryButton icon="settings" />
     <PrimaryButton onClick={toggleDropdow}>
       {modeObject[mode]}
       <i class="material-symbols-outlined mode">arrow_drop_down</i>
     </PrimaryButton>
-    <SecondaryButton icon='apps' />
-    <button on:click={e => dialogOpen = !dialogOpen}>
+    <SecondaryButton icon="apps" />
+    <button on:click={(e) => (dialogOpen = !dialogOpen)}>
       <img src={profile} alt="profile" />
     </button>
-    <dialog open={dialogOpen} on:close={e => dialogOpen = false}>
+    <dialog open={dialogOpen} on:close={(e) => (dialogOpen = false)}>
       <form on:submit={handleLogin}>
         <!-- mi procesador esta al 100% y no baja -->
-        <img src={profile} alt="login">
+        <img src={profile} alt="login" />
         <div>
           <section>
             <label for="user">email</label>
-            <input type="email" id="user" name="user">
+            <input type="email" id="user" name="user" />
           </section>
           <section>
             <label for="password">password</label>
-            <input type="password" name="password" id="password">
+            <input type="password" name="password" id="password" />
           </section>
         </div>
-        <div id='button-login'>
-          <button on:click={e=>dialogOpen = false}>Cancelar</button>
+        <div id="button-login">
+          <button on:click={(e) => (dialogOpen = false)}>Cancelar</button>
           <button type="submit">Iniciar Sesion</button>
-        </div>s
+        </div>
       </form>
     </dialog>
   </div>
@@ -209,22 +211,21 @@
   dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
   }
-  
-  form{
+
+  form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     height: 100%;
     width: 100%;
-    
   }
-  form > div{
+  form > div {
     flex: 1 1 0%;
-    display: flex; 
-    flex-direction: column;  
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;  
+    justify-content: center;
   }
 
   section {
@@ -234,20 +235,28 @@
     justify-content: space-between;
     margin: 10px;
   }
-  section > input{
+  section > input {
     width: 200px;
     height: 30px;
     border: 1px solid rgb(218, 220, 224);
     border-radius: 5px;
     padding: 5px;
   }
-  
-
 
   form > img {
     flex: 1 1 0%;
     border-radius: 50%;
   }
 
-    
+  /* talves no me guste */
+  form button{
+    margin: 10px;
+    padding: 10px;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+
+
 </style>
