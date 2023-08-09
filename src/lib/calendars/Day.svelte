@@ -14,8 +14,10 @@
     <article />
     <div />
     <article>
-      <span class="d">{days[day.getDay()].toUpperCase()}</span>
-      <span class="btn">{day.getDate()}</span>
+      <div>
+        <span class="d">{days[day.getDay()].toUpperCase()}</span>
+        <span class="btn">{day.getDate()}</span>
+      </div>
     </article>
     <div />
     <article class='utc'>
