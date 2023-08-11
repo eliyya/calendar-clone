@@ -1,14 +1,12 @@
 <script lang="ts">
   import logo from "../assets/calendar_25_2x.png"
-
+  import profile from "../assets/pfp.png"
   import { globalMode, modeObject } from "../stores/mode.js"
   import { months, globalSelectedDate } from "../stores/date.js"
   import PrimaryButton from "./PrimaryButton.svelte"
   import SecondaryButton from "./SecondaryButton.svelte"
 
   import { globalAside } from "../stores/aside.js"
-
-  const profile = "https://lh3.googleusercontent.com/ogw/AOLn63FEWRlHe0Yy8QxiiTlu5zbS1jPMJVqVBuqQh-e7Ig=s32-c-mo"
 
   let dropdown = false
   let mode: keyof typeof modeObject
@@ -56,10 +54,6 @@
     console.log(e.target)
   }
   let dialogOpen = false
-  
-
-
-
 </script>
 
 <header>
@@ -89,7 +83,9 @@
     </button>
     <dialog open={dialogOpen} on:close={(e) => (dialogOpen = false)}>
       <form on:submit={handleLogin}>
-        <!-- mi procesador esta al 100% y no baja -->
+        <div class="cancell">
+          <button on:click={(e) => (dialogOpen = false)}>Cancelar</button>
+        </div>
         <img src={profile} alt="login" />
         <div>
           <section>
@@ -102,7 +98,6 @@
           </section>
         </div>
         <div id="button-login">
-          <button on:click={(e) => (dialogOpen = false)}>Cancelar</button>
           <button type="submit">Iniciar Sesion</button>
         </div>
       </form>
@@ -237,7 +232,7 @@
   }
 
   section {
-    display: flex;
+    display: flex;  
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
@@ -260,7 +255,7 @@
 
   /* talves no me guste */
   form button {
-    margin: 10px;
+    /* margin: 10px; */
     padding: 10px;
     width: 100px;
     border: 1px solid rgb(218, 220, 224);
@@ -279,7 +274,19 @@
     font-size: 15px;
   }
 
+  .cancell {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+  }
 
+  /* not  */
+  section:has(input:focus) > label {
+    top: 0;
+    font-size: 10px;
+    color: var(--font-color);
+  }
   
 
 </style>
