@@ -5,6 +5,7 @@
   import { months, globalSelectedDate } from "../stores/date.js"
   import PrimaryButton from "./PrimaryButton.svelte"
   import SecondaryButton from "./SecondaryButton.svelte"
+  import Login from "./Login.svelte"
 
   import { globalAside } from "../stores/aside.js"
 
@@ -44,16 +45,8 @@
 
   const now = () => globalSelectedDate.set(new Date())
 
-  const handleLogin = (
-    e: Event & {
-      readonly submitter: HTMLElement
-    } & {
-      currentTarget: EventTarget & HTMLFormElement
-    }
-  ) => {
-    console.log(e.target)
-  }
   let dialogOpen = false
+  
 </script>
 
 <header>
@@ -78,30 +71,10 @@
       <i class="material-symbols-outlined mode">arrow_drop_down</i>
     </PrimaryButton>
     <SecondaryButton icon="apps" />
-    <button on:click={(e) => (dialogOpen = !dialogOpen)}>
+    <button on:click={() => (dialogOpen = !dialogOpen)}>
       <img src={profile} alt="profile" />
     </button>
-    <dialog open={dialogOpen} on:close={(e) => (dialogOpen = false)}>
-      <form on:submit={handleLogin}>
-        <div class="cancell">
-          <button on:click={(e) => (dialogOpen = false)}>Cancelar</button>
-        </div>
-        <img src={profile} alt="login" />
-        <div>
-          <section>
-            <label for="user">email</label>
-            <input type="email" id="user" name="user" />
-          </section>
-          <section>
-            <label for="password">password</label>
-            <input type="password" name="password" id="password" />
-          </section>
-        </div>
-        <div id="button-login">
-          <button type="submit">Iniciar Sesion</button>
-        </div>
-      </form>
-    </dialog>
+    <Login open={dialogOpen}/>
   </div>
 </header>
 {#if dropdown}
@@ -164,6 +137,8 @@
 
   img[alt="profile"] {
     border-radius: 50%;
+    width: 32px;
+    height: 32px;
   }
 
   .dropdown {
@@ -190,103 +165,5 @@
   .dropdown > button:hover {
     background-color: var(--button-hover-background-color);
   }
-
-  dialog {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 500px;
-    height: 500px;
-    border: 1px solid rgb(65, 66, 66,50%);
-    box-shadow: #2c2b2b 0px 0px 10px 0px;
-    border-radius: 10px;
-
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-    width: 100%;
-    background: #fff;    
-  }
-  form > div {
-    flex: 1 1 0%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  section {
-    display: flex;  
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin: 10px;
-  }
-  section > input {
-    width: 200px;
-    height: 30px;
-    border: 1px solid rgb(218, 220, 224);
-    border-radius: 5px;
-    padding: 5px;
-  }
-
-  form > img {
-    
-    flex: 1 1 0%;
-    border: solid 2px rgb(218, 220, 224);
-    border-radius: 50%; 
-  }
-
-  /* talves no me guste */
-  form button {
-    /* margin: 10px; */
-    padding: 10px;
-    width: 100px;
-    border: 1px solid rgb(218, 220, 224);
-    border-radius: 5px;
-    background-color: #fff;
-  }
-  form button:hover {
-    background-color: var(--button-hover-background-color);
-  }
-
-  section > label {
-    display: flex;
-    position: relative;
-    top: 33px;
-    width: 200px;
-    font-size: 15px;
-  }
-
-  .cancell {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    width: 100%;
-  }
-
-  /* not  */
-  section:has(input:focus) > label {
-    top: 0;
-    font-size: 10px;
-    color: var(--font-color);
-  }
-  
 
 </style>
