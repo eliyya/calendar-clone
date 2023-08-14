@@ -17,7 +17,7 @@
   ) => {
     const user = e.currentTarget.user.value
     const password = e.currentTarget.password.value
-    fetch("http://localhost:8000/auth/authorize", {
+    fetch("https://bold-dove-83-2tmn40rqxyyg.deno.dev/auth/authorize", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@
       alert('Las contraseñas no coinciden')
       return
     }
-    fetch("http://localhost:8000/users/", {
+    fetch("https://bold-dove-83.deno.dev/api/users/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -193,6 +193,7 @@
     border: 1px solid rgb(218, 220, 224);
     border-radius: 5px;
     padding: 5px;
+    
   }
 
   form > div > img {
