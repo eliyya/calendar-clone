@@ -1,7 +1,13 @@
 <script lang="ts">
   import profile from "../assets/pfp.png"
+  import { globalToken, globalUser } from '../stores/sesion'
+
+  let token = ''
+  globalToken.subscribe(v => token = v)
 
   export let open = false
+  let register = false
+
   const handleLogin = (
     e: Event & {
       readonly submitter: HTMLElement
@@ -20,38 +26,129 @@
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        console.log(res)
+          localStorage.setItem("token", res.token)
+          globalToken.set(res.token)
+          globalUser.set(res.user)
+          open = false
       })
       .catch((err) => {
         console.log(err)
       })
   }
 
+  const handleRegister = (
+    e: Event & {
+      readonly submitter: HTMLElement
+    } & {
+      currentTarget: EventTarget & HTMLFormElement
+    }
+  ) => {
+    const user = e.currentTarget.user.value
+    const password = e.currentTarget.password.value
+    const passwordR = e.currentTarget.passwordR.value
+    if (password !== passwordR) {
+      alert('Las contraseñas no coinciden')
+      return
+    }
+    fetch("http://localhost:8000/users/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user, password }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+          // localStorage.setItem("token", res.token)
+          // globalToken.set(res.token)
+          // globalUser.set(res.user)
+          open = false
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    globalToken.set('')
+    globalUser.set('')
+    open = false
+  }
+
   let u = ""
   let p = ""
+  let pr = ''
 </script>
 
 {#if open}
-  <form on:submit|preventDefault={handleLogin}>
+  {#if !token}
+    {#if !register}
+    <form on:submit|preventDefault={handleLogin}>
+      <div class="cancell">
+        <button on:click={() => (register = open = false)}>Cancelar</button>
+      </div>
+      <div>
+        <img src={profile} alt="login" />
+      </div>
+      <div>
+        <section>
+          <label for="user" class={u && "not-idk"}>email</label>
+          <input type="email" bind:value={u} id="user" name="user" />
+        </section>
+        <section>
+          <label for="password" class={p && "not-idk"}>password</label>
+          <input type="password" bind:value={p} name="password" id="password" />
+        </section>
+      </div>
+      <div id="button-login">
+        <button type="submit">Iniciar Sesion</button>
+        <button on:click={e => register = true}>Registro</button>
+      </div>
+    </form>
+    {:else}
+    <form on:submit|preventDefault={handleRegister}>
+      <div class="cancell">
+        <button on:click={() => (register = open = false)}>Cancelar</button>
+      </div>
+      <div>
+        <img src={profile} alt="login" />
+      </div>
+      <div>
+        <section>
+          <label for="user" class={u && "not-idk"}>email</label>
+          <input type="email" bind:value={u} id="user" name="user" />
+        </section>
+        <section>
+          <label for="password" class={p && "not-idk"}>password</label>
+          <input type="password" bind:value={p} name="password" id="password" />
+        </section>
+        <section>
+          <label for="passwordR" class={pr && "not-idk"}>password</label>
+          <input type="password" bind:value={p} name="passwordR" id="passwordR" />
+        </section>
+      </div>
+      <div id="button-login">
+        <button type="submit">Registrarse</button>
+        <button on:click={e => register = false}>inicio</button>
+      </div>
+    </form>
+    {/if}
+  {:else}
+  <form on:submit|preventDefault={handleLogout}>
     <div class="cancell">
-      <button on:click={() => (open = false)}>Cancelar</button>
+      <button on:click={() => (register = open = false)}>Cancelar</button>
     </div>
-    <img src={profile} alt="login" />
     <div>
-      <section>
-        <label for="user" class={u && "not-idk"}>email</label>
-        <input type="email" bind:value={u} id="user" name="user" />
-      </section>
-      <section>
-        <label for="password" class={p && "not-idk"}>password</label>
-        <input type="password" bind:value={p} name="password" id="password" />
-      </section>
+      <img src={profile} alt="login" />
     </div>
     <div id="button-login">
-      <button type="submit">Iniciar Sesion</button>
-      <button>registro</button>
+      <button type="submit">Cerrar sesion</button>
     </div>
   </form>
+  {/if}
 {/if}
 
 <style>
@@ -98,7 +195,7 @@
     padding: 5px;
   }
 
-  form > img {
+  form > div > img {
     flex: 1 1 0%;
     border-radius: 50%;
     box-shadow: inset 0px 0px 10px 0px;
