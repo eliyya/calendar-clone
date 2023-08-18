@@ -17,7 +17,7 @@
   ) => {
     const user = e.currentTarget.user.value
     const password = e.currentTarget.password.value
-    fetch("https://bold-dove-83-2tmn40rqxyyg.deno.dev/auth/authorize", {
+    fetch("https://bold-dove-83.deno.dev/auth/authorize", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -127,7 +127,7 @@
         </section>
         <section>
           <label for="passwordR" class={pr && "not-idk"}>password</label>
-          <input type="password" bind:value={p} name="passwordR" id="passwordR" />
+          <input type="password" bind:value={pr} name="passwordR" id="passwordR" />
         </section>
       </div>
       <div id="button-login">
