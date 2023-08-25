@@ -4,6 +4,11 @@
   import Calendar from "./lib/calendars/Calendar.svelte";
   import CreateButton from "./lib/CreateButton.svelte";
 
+  import Register from './pages/Register.svelte'
+
+  import { navigate, Router, Route } from "svelte-routing";
+  navigate("/register", { replace: true })
+
   import { globalAside } from './stores/aside.js'
   let asideVisible = true;
 
@@ -15,14 +20,22 @@
   <meta name="google" content="notranslate" />
 </svelte:head>
 
-<Menu />
+<Router url="/calendar-clone">
+  <div>
+    <Route path="/register" component={Register} />
+    <Route path="/blog" component={Blog} />
+    <Route path="/about" component={About} />
+    <Route path="/"><Home /></Route>
+  </div>
+</Router>
+<!-- <Menu />
 <div>
   {#if asideVisible}
     <Aside />
   {/if}
   <Calendar />
 </div>
-<CreateButton />
+<CreateButton /> -->
 
 <style>
   div {
