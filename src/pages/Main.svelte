@@ -1,13 +1,23 @@
 <script lang="ts">
+  import Menu from "../lib/Menu.svelte"
+  import Calendar from "../lib/calendars/Calendar.svelte"
+  import CreateButton from "../lib/CreateButton.svelte"
+  import Aside from "../lib/Aside.svelte"
   import { useNavigate } from "svelte-navigator"
+
+  let asideVisible = false
+  import {globalAside} from '../stores/aside'
+  globalAside.subscribe((aside) => {
+    asideVisible = aside
+  })
+
   const navigate = useNavigate()
   import { globalToken, globalUser } from "../stores/sesion"
-  import type { element_is } from "svelte/internal"
   let user = null
-  globalUser.subscribe((user) => (user = user))
+  globalUser.subscribe((u) => {
+    user = u    
+  })
   globalToken.subscribe((token) => {
-    console.log(typeof token)
-
     if (!token) {
       navigate("login")
       console.log("no hay token")
@@ -20,8 +30,13 @@
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res)
-          globalUser.set(res.user)
+          if (res.message) {
+            alert(res.message)
+            navigate("login")
+          } else {
+            console.log('res', res);
+            globalUser.set(res)            
+          }
         })
         .catch((err) => {
           console.log(err)
@@ -30,4 +45,19 @@
   })
 </script>
 
-<main>Holis</main>
+<Menu />
+<div>
+  {#if asideVisible}
+    <Aside />
+  {/if}
+  <Calendar />
+</div>
+<CreateButton />
+
+<style>
+  div {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 71px);
+  }
+</style>

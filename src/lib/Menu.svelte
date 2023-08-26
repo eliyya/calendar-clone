@@ -1,11 +1,11 @@
 <script lang="ts">
   import logo from "../assets/calendar_25_2x.png"
+  import { Link } from "svelte-navigator"
   import profile from "../assets/pfp.png"
   import { globalMode, modeObject } from "../stores/mode.js"
   import { months, globalSelectedDate } from "../stores/date.js"
   import PrimaryButton from "./PrimaryButton.svelte"
   import SecondaryButton from "./SecondaryButton.svelte"
-  import Login from "./Login.svelte"
 
   import { globalAside } from "../stores/aside.js"
 
@@ -71,10 +71,7 @@
       <i class="material-symbols-outlined mode">arrow_drop_down</i>
     </PrimaryButton>
     <SecondaryButton icon="apps" />
-    <button on:click={() => (dialogOpen = !dialogOpen)}>
-      <img src={profile} alt="profile" />
-    </button>
-    <Login open={dialogOpen}/>
+    <Link to="/me"><img src={profile} alt="profile" /></Link>
   </div>
 </header>
 {#if dropdown}
